@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,10 +19,15 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>i
     private List<String> mList;
     private Context mContext;
     private OnItemClickListener mOnItemClickListener;
+    private ArrayList<Integer> mHeights;
 
     public HomeAdapter(Context mContext,List<String>mList){
         this.mContext = mContext;
         this.mList = mList;
+        mHeights = new ArrayList <Integer>();
+        for (int i = 0 ;i <mList.size();i++){
+            mHeights.add((int) (Math.random()*500));
+        }
     }
     public interface OnItemClickListener
     {
@@ -47,12 +54,19 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>i
         view.setOnLongClickListener(this);
         return holder;
 
+
+
+
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder,final int position) {
         holder.itemView.setTag(position);
         holder.tv.setText(mList.get(position));
+
+        ViewGroup.LayoutParams lp = holder.tv.getLayoutParams();
+        lp.height =mHeights.get(position);
+        holder.tv.setLayoutParams(lp);
 
     }
 
@@ -77,6 +91,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>i
         return true;
 
     }
+
+
 
 
 

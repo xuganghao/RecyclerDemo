@@ -5,10 +5,13 @@ import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
+
+
 import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -24,14 +27,16 @@ public class MainActivity extends AppCompatActivity {
         initData();
 
         RecyclerView mRecyclerView = this.findViewById(R.id.id_recyclerview);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //设置布局管理器
+        //mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.VERTICAL));
+        //分割线（系统默认的）
+        //mRecyclerView.addItemDecoration(new DividerItemDecoration(MainActivity.this,DividerItemDecoration.VERTICAL));
+        mRecyclerView.addItemDecoration(new DividerGridItemDecoration(this));
 
+        //增加和删除时的动画
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mHomeAdapter = new HomeAdapter(this,mList);
-
-        //分割线
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(MainActivity.this,DividerItemDecoration.VERTICAL));
-
 
         mRecyclerView.setAdapter(mHomeAdapter);
 
@@ -55,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
                         .show();
             }
         });
-
-
     }
     private void initData() {
         mList=new ArrayList<String>();
